@@ -1,4 +1,4 @@
-package com.challenge.quinto.impacto;
+package com.challenge.quinto.impacto.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -8,13 +8,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Client {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-    public Client() {
-    }
+    private String title;
+
+    private String category;
+
+    private String duration;
+
+    private String registered;
+
+    private String description;
+
+    private String coverPage;
+
 }
