@@ -18,12 +18,6 @@ public class CourseDTO {
 
     private String title;
 
-    private String category;
-
-    private String duration;
-
-    private String registered;
-
     private String description;
 
     private String coverPage;
@@ -34,9 +28,6 @@ public class CourseDTO {
     public CourseDTO(Course course) {
         this.id = course.getId();
         this.title = course.getTitle();
-        this.category = course.getCategory();
-        this.duration = course.getDuration();
-        this.registered = course.getRegistered();
         this.description = course.getDescription();
         this.coverPage = course.getCoverPage();
         this.teacherFullName = course.getTeacher().getFirstName() + " " + course.getTeacher().getLastName();
@@ -49,18 +40,6 @@ public class CourseDTO {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public String getRegistered() {
-        return registered;
     }
 
     public String getDescription() {

@@ -16,7 +16,7 @@ public class CourseStudentDTO {
 
     public CourseStudentDTO(CourseStudent courseStudent) {
         this.id = courseStudent.getId();
-        this.courseTitle = courseStudent.getName();
+        this.courseTitle = courseStudent.getTitle();
         this.studentFullName = courseStudent.getStudent().getFirstName() + " " + courseStudent.getStudent().getLastName();
     }
 
