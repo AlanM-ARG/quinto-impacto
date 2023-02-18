@@ -1,12 +1,14 @@
 package com.challenge.quinto.impacto.services.implement;
 
+import com.challenge.quinto.impacto.dtos.CourseDTO;
 import com.challenge.quinto.impacto.entities.Course;
 import com.challenge.quinto.impacto.repositories.CourseRepository;
 import com.challenge.quinto.impacto.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImplement implements CourseService {
@@ -17,6 +19,21 @@ public class CourseServiceImplement implements CourseService {
     @Override
     public void saveCourse(Course course) {
         courseRepository.save(course);
+    }
+
+    @Override
+    public Set<CourseDTO> getAllCoursesDTO() {
+        return courseRepository.findAll().stream().map(CourseDTO::new).collect(Collectors.toSet());
+    }
+
+    @Override
+    public CourseDTO findCourseDTOById(Long id) {
+        return courseRepository.findById(id).map(CourseDTO::new).orElse(null);
+    }
+
+    @Override
+    public CourseDTO findCourseDTOByTitle(String title) {
+        return courseRepository.findByTitle(title).map(CourseDTO::new).orElse(null);
     }
 
 }

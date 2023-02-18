@@ -20,7 +20,7 @@ public class CourseStudent {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    private String name;
+    private String title;
 
     public CourseStudent() {
     }
@@ -28,7 +28,7 @@ public class CourseStudent {
     public CourseStudent(Course course, Student student) {
         this.course = course;
         this.student = student;
-        this.name = course.getTitle();
+        this.title = course.getTitle();
     }
 
     public Long getId() {
@@ -51,11 +51,11 @@ public class CourseStudent {
         this.student = student;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

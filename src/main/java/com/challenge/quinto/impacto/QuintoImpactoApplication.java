@@ -36,7 +36,7 @@ public class QuintoImpactoApplication {
 			teacher1.setAdmin(true);
 			teacherRepository.save(teacher1);
 
-			Course course1 = new Course("Java", "Programacion", "6 months", "5", "java course", "a" );
+			Course course1 = new Course("Java", "java course", "a" );
 
 			teacher1.addCourse(course1);
 
