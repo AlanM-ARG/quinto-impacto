@@ -12,8 +12,14 @@ public interface StudentService {
 
     Set<StudentDTO> getAllStudentDTO();
 
+    Set<Student> getAllStudent();
+
     StudentDTO findStudentDTOById(Long id);
 
+    Student findStudentById(Long id);
+
     StudentDTO findStudentDTOByEmail(String email);
+
+    Student findStudentByEmail(String email);
 
 }

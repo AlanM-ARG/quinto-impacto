@@ -12,8 +12,15 @@ public interface CourseStudentService {
 
     Set<CourseStudentDTO> getAllCoursesStudentsDTO();
 
+    Set<CourseStudent> getAllCoursesStudents();
+
     CourseStudentDTO findCourseStudentDTOById(Long id);
 
+    CourseStudent findCourseStudentById(Long id);
+
     CourseStudentDTO findCourseStudentDTOByTitle(String title);
+
+    CourseStudent findCourseStudentByTitle(String title);
+
 
 }

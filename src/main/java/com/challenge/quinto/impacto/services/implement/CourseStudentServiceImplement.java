@@ -8,6 +8,7 @@ import com.challenge.quinto.impacto.services.CourseStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,13 +29,28 @@ public class CourseStudentServiceImplement implements CourseStudentService {
     }
 
     @Override
+    public Set<CourseStudent> getAllCoursesStudents() {
+        return new HashSet<>(courseStudentRepository.findAll());
+    }
+
+    @Override
     public CourseStudentDTO findCourseStudentDTOById(Long id) {
         return courseStudentRepository.findById(id).map(CourseStudentDTO::new).orElse(null);
     }
 
     @Override
+    public CourseStudent findCourseStudentById(Long id) {
+        return courseStudentRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public CourseStudentDTO findCourseStudentDTOByTitle(String title) {
         return courseStudentRepository.findByTitle(title).map(CourseStudentDTO::new).orElse(null);
+    }
+
+    @Override
+    public CourseStudent findCourseStudentByTitle(String title) {
+        return courseStudentRepository.findByTitle(title).orElse(null);
     }
 
 }
