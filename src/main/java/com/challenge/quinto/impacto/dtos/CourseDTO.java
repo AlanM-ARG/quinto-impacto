@@ -2,6 +2,7 @@ package com.challenge.quinto.impacto.dtos;
 
 import com.challenge.quinto.impacto.entities.Course;
 import com.challenge.quinto.impacto.entities.CourseStudent;
+import com.challenge.quinto.impacto.entities.Shifts;
 import com.challenge.quinto.impacto.entities.Teacher;
 
 import javax.persistence.FetchType;
@@ -22,6 +23,8 @@ public class CourseDTO {
 
     private String coverPage;
 
+    private Shifts shift;
+
     private String teacherFullName;
 
     private Set<StudentDTO> studentDTOS;
@@ -30,6 +33,7 @@ public class CourseDTO {
         this.title = course.getTitle();
         this.description = course.getDescription();
         this.coverPage = course.getCoverPage();
+        this.shift = course.getShift();
         this.teacherFullName = course.getTeacher().getFirstName() + " " + course.getTeacher().getLastName();
         this.studentDTOS = course.getCourseStudents().stream().map(courseStudent -> new StudentDTO(courseStudent.getStudent())).collect(Collectors.toSet());
     }
@@ -48,6 +52,10 @@ public class CourseDTO {
 
     public String getCoverPage() {
         return coverPage;
+    }
+
+    public Shifts getShift() {
+        return shift;
     }
 
     public String getTeacherFullName() {
