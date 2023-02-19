@@ -1,9 +1,6 @@
 package com.challenge.quinto.impacto;
 
-import com.challenge.quinto.impacto.entities.Course;
-import com.challenge.quinto.impacto.entities.CourseStudent;
-import com.challenge.quinto.impacto.entities.Student;
-import com.challenge.quinto.impacto.entities.Teacher;
+import com.challenge.quinto.impacto.entities.*;
 import com.challenge.quinto.impacto.repositories.CourseRepository;
 import com.challenge.quinto.impacto.repositories.CourseStudentRepository;
 import com.challenge.quinto.impacto.repositories.StudentRepository;
@@ -36,7 +33,7 @@ public class QuintoImpactoApplication {
 			teacher1.setAdmin(true);
 			teacherRepository.save(teacher1);
 
-			Course course1 = new Course("Java", "java course", "a" );
+			Course course1 = new Course("Java", "java course", "a", Shifts.MAÑANA);
 
 			teacher1.addCourse(course1);
 
