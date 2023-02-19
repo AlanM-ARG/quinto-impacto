@@ -7,6 +7,7 @@ import com.challenge.quinto.impacto.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,12 +29,27 @@ public class TeacherServiceImplement implements TeacherService {
     }
 
     @Override
+    public Set<Teacher> getAllTeachers() {
+        return new HashSet<>(teacherRepository.findAll());
+    }
+
+    @Override
     public TeacherDTO findTeacherDTOById(Long id) {
         return teacherRepository.findById(id).map(TeacherDTO::new).orElse(null);
     }
 
     @Override
+    public Teacher findTeacherById(Long id) {
+        return teacherRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public TeacherDTO findTeacherDTOByEmail(String email) {
         return teacherRepository.findByEmail(email).map(TeacherDTO::new).orElse(null);
+    }
+
+    @Override
+    public Teacher findTeacherByEmail(String email) {
+        return teacherRepository.findByEmail(email).orElse(null);
     }
 }

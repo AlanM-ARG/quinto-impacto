@@ -1,6 +1,5 @@
 package com.challenge.quinto.impacto.services;
 
-import com.challenge.quinto.impacto.dtos.CourseDTO;
 import com.challenge.quinto.impacto.dtos.TeacherDTO;
 import com.challenge.quinto.impacto.entities.Teacher;
 
@@ -12,8 +11,14 @@ public interface TeacherService {
 
     Set<TeacherDTO> getAllTeachersDTO();
 
+    Set<Teacher> getAllTeachers();
+
     TeacherDTO findTeacherDTOById(Long id);
 
+    Teacher findTeacherById(Long id);
+
     TeacherDTO findTeacherDTOByEmail(String email);
+
+    Teacher findTeacherByEmail(String email);
 
 }
