@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="http://quintoimpacto.net/wp-content/uploads/2019/05/cropped-mini-01-192x192.png"
+        type="image/x-icon">
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/web/assets/css/index.css">
+    <title>Acceso - U.Q.I.</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <nav class="d-flex align-items-center justify-content-around">
+                <a class="navbar-brand" href="index.html"><img
+                        src="http://quintoimpacto.net/wp-content/uploads/2020/06/logo-2020-01-01.png"
+                        alt="logo-quinto-impacto"></a>
+                <h1 class="fw-bolder">Universidad Quinto Impacto</h1>
+                <ul class="navbar-nav flex-row gap-5">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/courses.html">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="opacity: 50%; cursor: auto;">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="opacity: 50%; cursor: auto;">Iniciar Sesion</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main class="login-register">
+            <div class="section">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center align-self-center py-5">
+                            <div class="section pt-5 pt-sm-2 text-center">
+                                <h6 class="mb-0 pb-3"><span>Inicio de Sesion</span><span>Registro</span></h6>
+                                <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+                                <label for="reg-log"></label>
+                                <div class="card-3d-wrap mx-auto">
+                                    <div class="card-3d-wrapper">
+                                        <div class="card-front">
+                                            <div class="center-wrap">
+                                                <div class="section text-center">
+                                                    <h4 class="mb-4 pb-3">Iniciar Sesion - Estudiante</h4>
+                                                    <div class="form-group">
+                                                        <input type="email" name="logEmail" v-model="loginEmail" class="form-style"
+                                                            placeholder="Correo Electronico" id="logemail" autocomplete="off">
+                                                        <i class="input-icon uil uil-at"></i>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <input type="password" name="logPass" v-model="loginPassword" class="form-style"
+                                                            placeholder="Contraseña" id="logpass" autocomplete="off">
+                                                        <i class="input-icon uil uil-lock-alt"></i>
+                                                    </div>
+                                                    <a href="#" @click="login()" class="btn mt-4">Acceder</a>
+                                                    <p class="mb-0 mt-4 text-center"><a href="/web/login-register-teacher.html" class="link">¿Sos Profesor?</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-back">
+                                            <div class="center-wrap">
+                                                <div class="section text-center">
+                                                    <h4 class="mb-4 pb-3">Registrarse - Estudiante</h4>
+                                                    <div class="form-group">
+                                                        <input type="text" name="regFirstName" class="form-style"
+                                                            placeholder="Nombre" id="regFirstName"
+                                                            autocomplete="off" v-model="registerFirstName">
+                                                        <i class="input-icon uil uil-user"></i>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <input type="text" name="regLastName" class="form-style"
+                                                            placeholder="Apellido" id="regLastName"
+                                                            autocomplete="off" v-model="registerLastName">
+                                                        <i class="input-icon uil uil-letter-english-a"></i>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <input type="email" name="regEmail" class="form-style"
+                                                            placeholder="Correo Electronico" id="regEmail" autocomplete="off" v-model="registerEmail">
+                                                        <i class="input-icon uil uil-at"></i>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <input type="password" name="regPass" class="form-style"
+                                                            placeholder="Contraseña" id="regPass" autocomplete="off" v-model="registerPassword">
+                                                        <i class="input-icon uil uil-lock-alt"></i>
+                                                    </div>
+                                                    <a href="#" class="btn mt-4" @click="register()">Registrarme</a>
+                                                    <p class="mb-0 mt-4 text-center"><a href="/web/login-register-teacher.html" class="link">¿Sos Profesor?</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="d-flex justify-content-around align-items-center">
+            <img src="http://quintoimpacto.net/wp-content/uploads/freshizer/0818debafafcc373c30df1dea0534558_iso-0-50-c-90.png" alt="normas-iso">
+            <div class=""><p class="m-0">Copyright 2023 ©&nbsp;All Rights Reserved</p>
+                <p class="mt-3 mb-3"><a class="text-decoration-none text-dark fw-bold" href="mailto:hola@quintoimpacto.net">hola@quintoimpacto.net</a></p>
+                <p class="mb-0">Distrito 33 - Ruta provincial 99 s/n Ciudad de Mendoza</p></div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/web/assets/js/login-register.js"></script>
+</body>
+
+</html>
