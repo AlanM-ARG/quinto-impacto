@@ -23,4 +23,7 @@ public interface CourseStudentService {
     CourseStudent findCourseStudentByTitle(String title);
 
 
+    void deleteCourseStudent(CourseStudent courseStudent);
+
+
 }

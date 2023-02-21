@@ -2,6 +2,7 @@ package com.challenge.quinto.impacto.services.implement;
 
 import com.challenge.quinto.impacto.dtos.CourseDTO;
 import com.challenge.quinto.impacto.entities.Course;
+import com.challenge.quinto.impacto.entities.CourseStudent;
 import com.challenge.quinto.impacto.repositories.CourseRepository;
 import com.challenge.quinto.impacto.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,12 @@ public class CourseServiceImplement implements CourseService {
     @Override
     public Course findCourseByTitle(String title) {
         return courseRepository.findByTitle(title).orElse(null);
+    }
+
+    @Override
+    public void deleteStudentCourse(Course course, CourseStudent courseStudent) {
+        course.getCourseStudents().remove(courseStudent);
+        courseRepository.save(course);
     }
 
 }

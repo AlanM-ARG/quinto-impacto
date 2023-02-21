@@ -22,4 +22,9 @@ public interface StudentService {
 
     Student findStudentByEmail(String email);
 
+    Set<String> getAllTokens ();
+
+    Student findByToken(String token);
+
+
 }
