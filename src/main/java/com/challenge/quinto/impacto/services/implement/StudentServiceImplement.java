@@ -51,4 +51,14 @@ public class StudentServiceImplement implements StudentService {
     public Student findStudentByEmail(String email) {
         return studentRepository.findByEmail(email).orElse(null);
     }
+
+    @Override
+    public Set<String> getAllTokens() {
+        return studentRepository.findAll().stream().map(Student::getToken).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Student findByToken(String token) {
+        return studentRepository.findByToken(token).orElse(null);
+    }
 }

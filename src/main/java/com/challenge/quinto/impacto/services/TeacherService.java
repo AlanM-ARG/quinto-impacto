@@ -21,4 +21,9 @@ public interface TeacherService {
 
     Teacher findTeacherByEmail(String email);
 
+    Set<String> getAllTokens ();
+
+    Teacher findByToken(String token);
+
+
 }
