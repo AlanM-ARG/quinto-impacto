@@ -33,7 +33,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
             Student student = studentService.findStudentByEmail(email);
             Teacher teacher = teacherService.findTeacherByEmail(email);
 
-            if (student != null) {
+            if (student != null && student.getActive()) {
                 if (student.getEmail().equals("admin@admin.com")) {
                     student.setAdmin(true);
                     studentService.saveStudent(student);
@@ -43,18 +43,11 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
                     return new User(student.getEmail(), student.getPassword(),
                             AuthorityUtils.createAuthorityList(String.valueOf(Rol.STUDENT)));
                 }
-            } else if(teacher != null){
-                if (teacher.getEmail().equals("admin@admin.com")) {
-                    teacher.setAdmin(true);
-                    teacherService.saveTeacher(teacher);
-                    return new User(teacher.getEmail(), teacher.getPassword(),
-                            AuthorityUtils.createAuthorityList(String.valueOf(Rol.ADMIN)));
-                } else{
+            } else if(teacher != null && teacher.getActive()){
                     return new User(teacher.getEmail(), teacher.getPassword(),
                             AuthorityUtils.createAuthorityList(String.valueOf(Rol.TEACHER)));
-                }
             } else {
-                throw new UsernameNotFoundException("Unknown email: " + email);
+                throw new UsernameNotFoundException("Email not registered or not validated: " + email);
 
             }
 
