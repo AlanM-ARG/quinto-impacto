@@ -1,6 +1,7 @@
 package com.challenge.quinto.impacto.services.implement;
 
 import com.challenge.quinto.impacto.dtos.TeacherDTO;
+import com.challenge.quinto.impacto.entities.Student;
 import com.challenge.quinto.impacto.entities.Teacher;
 import com.challenge.quinto.impacto.repositories.TeacherRepository;
 import com.challenge.quinto.impacto.services.TeacherService;
@@ -52,4 +53,15 @@ public class TeacherServiceImplement implements TeacherService {
     public Teacher findTeacherByEmail(String email) {
         return teacherRepository.findByEmail(email).orElse(null);
     }
+
+    @Override
+    public Set<String> getAllTokens() {
+        return teacherRepository.findAll().stream().map(Teacher::getToken).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Teacher findByToken(String token) {
+        return teacherRepository.findByToken(token).orElse(null);
+    }
+
 }

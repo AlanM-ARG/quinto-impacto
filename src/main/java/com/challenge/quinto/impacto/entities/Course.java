@@ -20,6 +20,8 @@ public class Course {
 
     private String coverPage;
 
+    private String category;
+
     private Shifts shift;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -32,19 +34,21 @@ public class Course {
     public Course() {
     }
 
-    public Course(String title, String description, String coverPage, Shifts shift) {
+    public Course(String title, String description, String coverPage, Shifts shift, String category) {
         this.title = title;
         this.description = description;
         this.coverPage = coverPage;
         this.shift = shift;
+        this.category = category;
     }
 
-    public Course(String title, String description, String coverPage, Shifts shift, Teacher teacher) {
+    public Course(String title, String description, String coverPage, Shifts shift, Teacher teacher, String category) {
         this.title = title;
         this.description = description;
         this.coverPage = coverPage;
         this.shift = shift;
         this.teacher = teacher;
+        this.category = category;
     }
 
     public Long getId() {
@@ -89,6 +93,14 @@ public class Course {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Set<CourseStudent> getCourseStudents() {

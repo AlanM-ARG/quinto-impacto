@@ -53,4 +53,9 @@ public class CourseStudentServiceImplement implements CourseStudentService {
         return courseStudentRepository.findByTitle(title).orElse(null);
     }
 
+    @Override
+    public void deleteCourseStudent(CourseStudent courseStudent) {
+        courseStudentRepository.delete(courseStudent);
+    }
+
 }
