@@ -2,14 +2,19 @@ package com.challenge.quinto.impacto.controllers;
 
 import com.challenge.quinto.impacto.dtos.CourseDTO;
 import com.challenge.quinto.impacto.entities.Course;
+import com.challenge.quinto.impacto.entities.Shifts;
+import com.challenge.quinto.impacto.entities.Teacher;
 import com.challenge.quinto.impacto.services.CourseService;
+import com.challenge.quinto.impacto.services.StudentService;
 import com.challenge.quinto.impacto.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -21,16 +26,29 @@ public class CourseController {
     @Autowired
     TeacherService teacherService;
 
+    @Autowired
+    StudentService studentService;
+
+
+    @GetMapping("/courses/{id}")
+    public CourseDTO getCourseDTO(@PathVariable Long id){
+        return courseService.findCourseDTOById(id);
+    }
+
     @GetMapping("/courses")
     public Set<CourseDTO> getAllCoursesDTO(){
         return courseService.getAllCoursesDTO();
     }
 
-    @PostMapping("/courses")
-    public ResponseEntity<?> createCourse(@RequestParam String title,@RequestParam String description,@RequestParam String coverPage){
+    @GetMapping("/courses/current")
+    public Set<CourseDTO> getCoursesCurrentDTO(Authentication authentication){
+        return studentService.findStudentByEmail(authentication.getName()).getCourseStudents().stream().map(courseStudent -> new CourseDTO(courseStudent.getCourse())).collect(Collectors.toSet());
+    }
 
-// cambiar el dto por entidad
-        CourseDTO courseDTO = courseService.findCourseDTOByTitle(title);
+    @PostMapping("/courses")
+    public ResponseEntity<?> createCourse(@RequestParam String title,@RequestParam String description,@RequestParam String coverPage, @RequestParam String shifts, @RequestParam String category){
+
+        Course course = courseService.findCourseByTitle(title);
 
         if (title.isEmpty()){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -41,11 +59,23 @@ public class CourseController {
         if (coverPage.isEmpty()){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        if (courseDTO != null){
+        if (category.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        if (course != null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        if (!shifts.equals("MAÑANA")){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        if (!shifts.equals("TARDE")){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        if (!shifts.equals("NOCHE")){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        courseService.saveCourse(new Course(title, description, coverPage));
+        courseService.saveCourse(new Course(title, description, coverPage, Shifts.valueOf(shifts), category));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -53,12 +83,43 @@ public class CourseController {
     @PatchMapping("/courses/teacher")
     public ResponseEntity<?> changeCourseTeacher (@RequestParam Long courseID, @RequestParam Long teacherID){
 
-// cambiar el dto por entidad
+        Course course = courseService.findCourseById(courseID);
 
-        CourseDTO courseDTO = courseService.findCourseDTOById(courseID);
+        Teacher teacher = teacherService.findTeacherById(teacherID);
 
+        if (course == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        if (teacher == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        course.setTeacher(teacher);
+
+        courseService.saveCourse(course);
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PatchMapping("/courses/teacher/delete")
+    public ResponseEntity<?> deleteCourseTeacher(@RequestParam Long courseID){
+
+        Course course = courseService.findCourseById(courseID);
+
+        if (course == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        if (course.getTeacher() == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        course.setTeacher(null);
+
+        courseService.saveCourse(course);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }
