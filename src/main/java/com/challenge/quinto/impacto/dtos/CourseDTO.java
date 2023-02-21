@@ -25,6 +25,8 @@ public class CourseDTO {
 
     private Shifts shift;
 
+    private String category;
+
     private String teacherFullName;
 
     private Set<StudentDTO> studentDTOS;
@@ -34,7 +36,12 @@ public class CourseDTO {
         this.description = course.getDescription();
         this.coverPage = course.getCoverPage();
         this.shift = course.getShift();
-        this.teacherFullName = course.getTeacher().getFirstName() + " " + course.getTeacher().getLastName();
+        this.category = course.getCategory();
+        if(course.getTeacher() != null){
+            this.teacherFullName = course.getTeacher().getFirstName() + " " + course.getTeacher().getLastName();
+        }else{
+            this.teacherFullName = "No tiene profesor";
+        }
         this.studentDTOS = course.getCourseStudents().stream().map(courseStudent -> new StudentDTO(courseStudent.getStudent())).collect(Collectors.toSet());
     }
 
@@ -56,6 +63,10 @@ public class CourseDTO {
 
     public Shifts getShift() {
         return shift;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public String getTeacherFullName() {
