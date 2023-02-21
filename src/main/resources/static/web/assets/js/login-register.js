@@ -1,7 +1,7 @@
 const app = Vue.createApp({
     data() {
         return {
-            studentUrl: "/api/students",
+            studentUrl: "http://localhost:8080/api/students",
             loginEmail: "",
             loginPassword: "",
             registerFirstName: "",
@@ -9,14 +9,15 @@ const app = Vue.createApp({
             registerEmail: "",
             registerPassword: "",
             error: ""
+
         }
     },
     created() {
-
+        this.alert()
     },
     methods: {
         login() {
-            axios.post("/api/login", "email=" + this.loginEmail + "&password=" + this.loginPassword)
+            axios.post("http://localhost:8080/api/login", "email=" + this.loginEmail + "&password=" + this.loginPassword)
                 .then(response => {
                     window.location.href = "/"
                     console.log(response);
@@ -46,20 +47,23 @@ const app = Vue.createApp({
         },
         register() {
             axios.post(this.studentUrl, "firstName=" + this.registerFirstName + "&lastName=" + this.registerLastName + "&email=" + this.registerEmail + "&password=" + this.registerPassword)
-                .then(() => Swal.fire('Confirme su correo electronico por favor!', 'warning')
-                .then(()=>{
-                    this.registerFirstName = ""
-                    this.registerLastName = ""
-                    this.registerEmail = ""
-                    this.registerPassword = ""
-                }))
+                .then(() => Swal.fire({
+                    icon: 'warning',
+                    title: 'Confirme su correo electronico por favor!'
+                })
+                    .then(() => {
+                        this.registerFirstName = ""
+                        this.registerLastName = ""
+                        this.registerEmail = ""
+                        this.registerPassword = ""
+                    }))
                 .catch(error => {
                     console.log(error);
                     this.error = error.response.data
-                        Swal.fire({
-                            icon: 'error',
-                            title: `${this.error}`,
-                        })
+                    Swal.fire({
+                        icon: 'error',
+                        title: `${this.error}`,
+                    })
                 })
         },
         alert() {

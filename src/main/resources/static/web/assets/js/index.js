@@ -32,6 +32,21 @@ const app = Vue.createApp({
                 return this.teacher.profileImage
             }
             return "https://i.ibb.co/yFKrNwB/estudio.png"
+        },
+        logout() {
+            Swal.fire({
+                title: '¿Estas seguro de que deseas cerrar sesion?',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonColor: '#4356a2',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post("http://localhost:8080/api/logout")
+                    .then(() => window.location.href = "http://localhost:8080/web/index.html")
+                } 
+            })
         }
     },
     computed: {

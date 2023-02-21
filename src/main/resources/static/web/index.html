@@ -36,9 +36,12 @@
                         <a class="nav-link" href="/web/login-register.html">Iniciar Sesion</a>
                     </li>
                 </ul>
-                <a href="/web/profile.html" v-if="student.length != 0 || teacher.length != 0">
-                    <img class="profile" :src="getProfileImage()" alt="profileImage">      
-                </a>
+                <img class="profile dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                    :src="getProfileImage()" alt="profileImage" v-if="student.length != 0 || teacher.length != 0">
+                <ul class="dropdown-menu">
+                    <li><a href="/web/profile.html" class="dropdown-item" type="button">Mi perfil</a></li>
+                    <li><button class="dropdown-item text-danger fw-bold" type="button" @click="logout()">Cerrar Sesion</button></li>
+                </ul>
             </nav>
         </header>
         <main>
