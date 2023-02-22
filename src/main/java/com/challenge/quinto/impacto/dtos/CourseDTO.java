@@ -25,6 +25,8 @@ public class CourseDTO {
 
     private Shifts shift;
 
+    private Boolean enabled;
+
     private String category;
 
     private String teacherFullName;
@@ -43,6 +45,9 @@ public class CourseDTO {
             this.teacherFullName = "No tiene profesor";
         }
         this.studentDTOS = course.getCourseStudents().stream().map(courseStudent -> new StudentDTO(courseStudent.getStudent())).collect(Collectors.toSet());
+        this.enabled = course.getEnabled();
+
+
     }
 
     public Long getId() {
@@ -75,5 +80,9 @@ public class CourseDTO {
 
     public Set<StudentDTO> getStudentDTOS() {
         return studentDTOS;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
     }
 }
