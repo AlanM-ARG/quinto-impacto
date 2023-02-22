@@ -78,7 +78,7 @@ const app = Vue.createApp({
         },
         changePassword() {
             if (this.student != 0) {
-                axios.patch('/api/student/current/changePassword', `password=${this.newPassword}&oldPassword=${this.oldPassword}`)
+                axios.patch('/api/students/current/changePassword', `password=${this.newPassword}&oldPassword=${this.oldPassword}`)
                     .then(() => {
                         this.newPassword = ''
                         this.oldPassword = ''
