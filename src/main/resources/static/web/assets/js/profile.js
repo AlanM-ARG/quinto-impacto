@@ -34,57 +34,72 @@ const app = Vue.createApp({
             }
             return "https://i.ibb.co/yFKrNwB/estudio.png"
         },
-        getCoursesTitle(){
-            if(this.student != 0){
+        getCoursesTitle() {
+            if (this.student != 0) {
                 return this.student.coursesStudentsTitle
-            }else if(this.teacher != 0){
+            } else if (this.teacher != 0) {
                 return this.teacher.coursesDTO.map(course => course.title)
-            }else{
+            } else {
                 return []
             }
         },
-        changeProfileImage(){
+        changeProfileImage() {
             let form = document.querySelector('#profileImage');
             let formData = new FormData(form)
             formData.append('upload_preset', 'r16u29xq')
             axios.post('https://api.cloudinary.com/v1_1/dlfic0owc/image/upload', formData)
                 .then(response => {
-                    if(this.student != 0){
-                        axios.post("http://localhost:8080/api/clients/current/uploadImage", "image=" + response.data.secure_url)
-                        .then(() => {
-                            this.getStudent()
-                            Swal.fire('Imagen Cambiada con exito!', '', 'success')
-                        })
-                        .catch(err => Swal.fire(err.response.data, '', 'success'))
-                    }else if(this.teacher != 0){
+                    if (this.student != 0) {
+                        axios.post("http://localhost:8080/api/students/current/uploadImage", "image=" + response.data.secure_url)
+                            .then(() => {
+                                this.getStudent()
+                                Swal.fire('Imagen Cambiada con exito!', '', 'success')
+                            })
+                            .catch(err => Swal.fire({
+                                icon: 'error',
+                                title: err.response.data + ''
+                            }))
+                    } else if (this.teacher != 0) {
                         axios.post("http://localhost:8080/api/teacher/current/uploadImage", "image=" + response.data.secure_url)
-                        .then(() => {
-                            this.getTeacher()
-                            Swal.fire('Imagen Cambiada con exito!', '', 'success')
-                        })
-                        .catch(err => Swal.fire(err.response.data, '', 'success'))
-                    }     
+                            .then(() => {
+                                this.getTeacher()
+                                Swal.fire('Imagen Cambiada con exito!', '', 'success')
+                            })
+                            .catch(err => Swal.fire({
+                                icon: 'error',
+                                title: err.response.data + ''
+                            }))
+                    }
                 })
-                .catch(err => Swal.fire(err.response.data, '', 'success'))
+                .catch(err => Swal.fire({
+                    icon: 'error',
+                    title: err.response.data + ''
+                }))
         },
-        changePassword(){
-            if(this.student != 0){
-                axios.patch('/api/student/current/changePassword',`password=${this.newPassword}&oldPassword=${this.oldPassword}`)
-                .then(() => {
-                    this.newPassword = ''
-                    this.oldPassword = ''
-                    Swal.fire('Contraseña Cambiada con exito!', '', 'success')
-                })
-                .catch(err=> Swal.fire(err.response.data, '', 'success'))
-            }else if(this.teacher != 0){
-                axios.patch('/api/teacher/current/changePassword',`password=${this.newPassword}&oldPassword=${this.oldPassword}`)
-                .then(() => {
-                    this.newPassword = ''
-                    this.oldPassword = ''
-                    Swal.fire('Contraseña Cambiada con exito!', '', 'success')
-                })
-                .catch(err=> Swal.fire(err.response.data, '', 'success'))
-            } 
+        changePassword() {
+            if (this.student != 0) {
+                axios.patch('/api/student/current/changePassword', `password=${this.newPassword}&oldPassword=${this.oldPassword}`)
+                    .then(() => {
+                        this.newPassword = ''
+                        this.oldPassword = ''
+                        Swal.fire('Contraseña Cambiada con exito!', '', 'success')
+                    })
+                    .catch(err => Swal.fire({
+                        icon: 'error',
+                        title: err.response.data + ''
+                    }))
+            } else if (this.teacher != 0) {
+                axios.patch('/api/teacher/current/changePassword', `password=${this.newPassword}&oldPassword=${this.oldPassword}`)
+                    .then(() => {
+                        this.newPassword = ''
+                        this.oldPassword = ''
+                        Swal.fire('Contraseña Cambiada con exito!', '', 'success')
+                    })
+                    .catch(err => Swal.fire({
+                        icon: 'error',
+                        title: err.response.data + ''
+                    }))
+            }
         },
         logout() {
             Swal.fire({
@@ -100,13 +115,17 @@ const app = Vue.createApp({
                         .then(() => window.location.href = "http://localhost:8080/web/index.html")
                 }
             })
+                .catch(err => Swal.fire({
+                    icon: 'error',
+                    title: err.response.data + ''
+                }))
         }
     },
     computed: {
 
     },
     mounted() {
-        
+
     }
 })
 app.mount('#app')
