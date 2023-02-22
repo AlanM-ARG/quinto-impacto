@@ -126,38 +126,5 @@ public class StudentController {
 
     }
 
-    @PatchMapping ("/students/courses/remove/current")
-    public ResponseEntity<Object> deleteStudentCourse(@RequestParam Long courseID, Authentication authentication){
-
-        Student student = studentService.findStudentByEmail(authentication.getName());
-
-        if (student != null){
-
-            student.getCourseStudents().forEach(courseStudent ->{
-
-                if(courseStudent.getCourse().getId().equals(courseID)){
-
-                    courseStudentService.deleteCourseStudent(courseStudent);
-
-                    student.getCourseStudents().remove(courseStudent);
-
-                    studentService.saveStudent(student);
-
-                    Course course = courseService.findCourseById(courseID);
-
-                    courseService.deleteStudentCourse(course, courseStudent);
-
-                }
-
-            }) ;
-
-            return new ResponseEntity<>("Deleted Course from student", HttpStatus.OK);
-
-        }
-
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
-    }
-
 
 }

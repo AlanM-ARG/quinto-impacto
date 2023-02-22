@@ -40,6 +40,11 @@ public class CourseController {
         return courseService.getAllCoursesDTO();
     }
 
+    @GetMapping("/courses/active")
+    public Set<CourseDTO> getAllCoursesDTOActives(){
+        return courseService.getCoursesActives().stream().map(CourseDTO::new).collect(Collectors.toSet());
+    }
+
     @GetMapping("/courses/current")
     public Set<CourseDTO> getCoursesCurrentDTO(Authentication authentication){
         return studentService.findStudentByEmail(authentication.getName()).getCourseStudents().stream().map(courseStudent -> new CourseDTO(courseStudent.getCourse())).collect(Collectors.toSet());
@@ -119,6 +124,30 @@ public class CourseController {
         courseService.saveCourse(course);
 
         return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @PatchMapping("/course/disable/{id}")
+    public ResponseEntity<?> disableCourse(@PathVariable Long id) {
+
+            Set<Course> coursesActives = courseService.getCoursesActives();
+
+            Course courseSelected = courseService.findCourseById(id);
+
+            if (id == null || id <= 0) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            if (courseSelected == null) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            if (!coursesActives.contains(courseSelected)) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+
+            courseSelected.setEnabled(false);
+            courseService.saveCourse(courseSelected);
+
+            return new ResponseEntity<>(HttpStatus.OK);
 
     }
 

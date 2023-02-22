@@ -59,4 +59,9 @@ public class CourseServiceImplement implements CourseService {
         courseRepository.save(course);
     }
 
+    @Override
+    public Set<Course> getCoursesActives() {
+        return courseRepository.findAll().stream().filter(Course::getEnabled).collect(Collectors.toSet());
+    }
+
 }
