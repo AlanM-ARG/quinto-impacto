@@ -56,33 +56,27 @@ public class CourseController {
         Course course = courseService.findCourseByTitle(title);
 
         if (title.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese un titulo",HttpStatus.FORBIDDEN);
         }
         if (description.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese una descripcion",HttpStatus.FORBIDDEN);
         }
         if (coverPage.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese una imagen",HttpStatus.FORBIDDEN);
         }
         if (category.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese una categoria",HttpStatus.FORBIDDEN);
         }
         if (course != null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ya existe un curso con ese titulo",HttpStatus.FORBIDDEN);
         }
-        if (!shifts.equals("MAÑANA")){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        if (!shifts.equals("TARDE")){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        if (!shifts.equals("NOCHE")){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (!shifts.equals("MAÑANA") && !shifts.equals("TARDE") && !shifts.equals("NOCHE")){
+            return new ResponseEntity<>("Ingrese un turno valido",HttpStatus.FORBIDDEN);
         }
 
         courseService.saveCourse(new Course(title, description, coverPage, Shifts.valueOf(shifts), category));
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Curso creado exitosamente",HttpStatus.CREATED);
     }
 
     @PatchMapping("/courses/teacher")
@@ -93,18 +87,18 @@ public class CourseController {
         Teacher teacher = teacherService.findTeacherById(teacherID);
 
         if (course == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El curso no existe",HttpStatus.FORBIDDEN);
         }
 
         if (teacher == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El profesor no existe",HttpStatus.FORBIDDEN);
         }
 
         course.setTeacher(teacher);
 
         courseService.saveCourse(course);
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Profesor cambiado con exito",HttpStatus.ACCEPTED);
     }
 
     @PatchMapping("/courses/teacher/delete")
@@ -113,17 +107,17 @@ public class CourseController {
         Course course = courseService.findCourseById(courseID);
 
         if (course == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El curso no existe",HttpStatus.FORBIDDEN);
         }
         if (course.getTeacher() == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Este curso no tiene profesor",HttpStatus.FORBIDDEN);
         }
 
         course.setTeacher(null);
 
         courseService.saveCourse(course);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("El profesor de este curso fue borrado",HttpStatus.OK);
 
     }
 
@@ -135,19 +129,19 @@ public class CourseController {
             Course courseSelected = courseService.findCourseById(id);
 
             if (id == null || id <= 0) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("Ingrese un id valido",HttpStatus.FORBIDDEN);
             }
             if (courseSelected == null) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("El curso seleccionado no existe",HttpStatus.FORBIDDEN);
             }
             if (!coursesActives.contains(courseSelected)) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("El curso ya se encuentra desactivado",HttpStatus.FORBIDDEN);
             }
 
             courseSelected.setEnabled(false);
             courseService.saveCourse(courseSelected);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("Curso desactivado",HttpStatus.OK);
 
     }
 

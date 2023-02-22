@@ -63,19 +63,19 @@ public class StudentController {
         Teacher teacher = teacherService.findTeacherByEmail(email);
 
         if (firstName.isEmpty() ){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese un nombre",HttpStatus.FORBIDDEN);
         }
         if (lastName.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese un apellido",HttpStatus.FORBIDDEN);
         }
         if (email.isEmpty() ){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese un correo electronico",HttpStatus.FORBIDDEN);
         }
         if (password.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese una contraseña",HttpStatus.FORBIDDEN);
         }
         if (student != null && teacher != null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ya exite un usuario con ese correo electronico",HttpStatus.FORBIDDEN);
         }
 
         Set<String> allTokens = studentService.getAllTokens();
@@ -93,7 +93,7 @@ public class StudentController {
 
         emailService.sendEmail(newStudent.getEmail(), emailService.buildEmail(newStudent.getFirstName(), link));
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Estudiante registrado con exito",HttpStatus.CREATED);
 
     }
 
@@ -101,7 +101,7 @@ public class StudentController {
     public ResponseEntity<?> confirmStudent (@PathVariable String token, HttpServletResponse response) throws IOException {
 
         if (token.isEmpty()){
-            return new ResponseEntity<>("Token cannot be found", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("No puede enviar un token vacio", HttpStatus.FORBIDDEN);
         }
 
         Student student = studentService.findByToken(token);
@@ -110,7 +110,7 @@ public class StudentController {
 
 
             if (student.getActive()) {
-                return new ResponseEntity<>("The student is already activated", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("El estudiante ya se encontraba activado", HttpStatus.FORBIDDEN);
             }
 
             student.setActive(true);
@@ -119,12 +119,52 @@ public class StudentController {
 
             response.sendRedirect("/web/login-register.html?confirmed=true");
 
-            return new ResponseEntity<>("Student Confirmed", HttpStatus.OK);
+            return new ResponseEntity<>("Correo electronico de estudiante confirmado", HttpStatus.OK);
 
         }
-        return new ResponseEntity<>("No Student with this token was found.", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("No se encontro ningun estudiante con ese token", HttpStatus.FORBIDDEN);
 
     }
 
+    @PatchMapping("/students/current/changePassword")
+    public ResponseEntity<?> changePassword(Authentication authentication, @RequestParam String password, @RequestParam String oldPassword){
 
+        Student student = studentService.findStudentByEmail(authentication.getName());
+
+        if (student == null){
+            return new ResponseEntity<>("Debes iniciar sesion", HttpStatus.FORBIDDEN);
+        }
+        if (password.isEmpty()){
+            return new ResponseEntity<>("Ingrese la contraseña nueva",HttpStatus.FORBIDDEN);
+        }
+        if (password.equals(oldPassword)){
+            return new ResponseEntity<>("Las contraseñas son iguales",HttpStatus.FORBIDDEN);
+        }
+        if (!passwordEncoder.matches(oldPassword, student.getPassword())){
+            return new ResponseEntity<>("Contraseña erronea",HttpStatus.FORBIDDEN);
+        }
+
+        student.setPassword(passwordEncoder.encode(password));
+        studentService.saveStudent(student);
+
+        return new ResponseEntity<>("Contraseña cambiada",HttpStatus.OK);
+    }
+
+    @PostMapping("/student/current/uploadImage")
+    public ResponseEntity<?> saveImage(@RequestParam String image,Authentication authentication) {
+
+        Student student = studentService.findStudentByEmail(authentication.getName());
+
+        if (student == null){
+            return new ResponseEntity<>("Debes iniciar sesion para realizar esta operacion",HttpStatus.FORBIDDEN);
+        }
+        if (image.isEmpty()){
+            return new ResponseEntity<>("Seleccione una imagen",HttpStatus.FORBIDDEN);
+        }
+
+        student.setProfileImage(image);
+        studentService.saveStudent(student);
+
+        return new ResponseEntity<>("Imagen de perfil Cambiada", HttpStatus.OK);
+    }
 }

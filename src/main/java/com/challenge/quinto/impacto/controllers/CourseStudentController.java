@@ -60,18 +60,18 @@ public class CourseStudentController {
             Course course = courseService.findCourseById(courseID);
 
             if (coursesStudent.contains(course)){
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("El estudiante ya se encuentra inscripto a este curso", HttpStatus.FORBIDDEN);
             }
 
             CourseStudent courseStudent = new CourseStudent(course, student);
 
             courseStudentService.saveCourseStudent(courseStudent);
 
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>("Inscripto correctamente",HttpStatus.OK);
 
         }
 
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("Debes estas autenticado para inscribirte a un curso",HttpStatus.FORBIDDEN);
 
     }
 
