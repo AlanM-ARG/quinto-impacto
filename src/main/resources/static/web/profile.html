@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="http://quintoimpacto.net/wp-content/uploads/2019/05/cropped-mini-01-192x192.png"
+        type="image/x-icon">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/web/assets/css/index.css">
+    <title>Perfil - U.Q.I.</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <nav class="d-flex align-items-center justify-content-around">
+                <a class="navbar-brand" href="#"><img
+                        src="http://quintoimpacto.net/wp-content/uploads/2020/06/logo-2020-01-01.png"
+                        alt="logo-quinto-impacto"></a>
+                <h1 class="fw-bolder">Universidad Quinto Impacto</h1>
+                <ul class="navbar-nav flex-row gap-5">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/courses.html">Cursos</a>
+                    </li>
+                    <li class="nav-item" v-if="student.length == 0 && teacher.length == 0">
+                        <a class="nav-link" href="/web/login-register.html">Registrarse</a>
+                    </li>
+                    <li class="nav-item" v-if="student.length == 0 && teacher.length == 0">
+                        <a class="nav-link" href="/web/login-register.html">Iniciar Sesion</a>
+                    </li>
+                </ul>
+                <img class="profile dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                    :src="getProfileImage()" alt="profileImage" v-if="student.length != 0 || teacher.length != 0">
+                <ul class="dropdown-menu">
+                    <li><a href="/web/index.html" class="dropdown-item" type="button">Inicio</a></li>
+                    <li><button class="dropdown-item text-danger fw-bold" type="button" @click="logout()">Cerrar
+                            Sesion</button></li>
+                </ul>
+            </nav>
+        </header>
+        <main class="flex-column align-items-center">
+            <h2 class="text-white fw-bold text-center py-5" style="align-self: start; width: 100%;">Mis datos</h2>
+
+            <div class=" card1 mb-5">
+                <div class="banner">
+                    <!-- <img :src="student.length != 0 ? student.profileImage : teacher.length != 0 ? teacher.profileImage : ''"
+                        alt="profileImage"> -->
+                    <div class="avatar-upload d-flex justify-content-center">
+                        <div class="avatar-edit">
+                            <form v-on:change="changeProfileImage()" id="profileImage" enctype="multipart/form-data">
+                                <input type="file" id="imageUpload" name="file" accept=".png, .jpg, .jpeg">
+                                <label for="imageUpload" class="d-flex justify-content-center align-items-center"><i class="uil uil-pen" style="font-size: 1.5rem;"></i></label>
+                            </form>
+                        </div>
+                        <div class="avatar-preview">
+                            <div id="imagePreview" :style="'background-image: url('+ (student.length != 0 ? student.profileImage : teacher.length != 0 ? teacher.profileImage : '') + ')'">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="menu">
+                </div>
+                <h2 class="name">{{student.length != 0 ? student.firstName + ' ' + student.lastName : teacher.length !=
+                    0 ? teacher.firstName + ' ' + teacher.lastName : ''}}</h2>
+                <div class="title">{{student.length != 0 ? 'Estudiante' : teacher.length != 0 ? 'Profesor' : ''}}</div>
+                <div class="actions">
+                    <p class="fs-6"><span class="fw-bold">Correo Electronico: </span>{{student.length != 0 ?
+                        student.email : teacher.length != 0 ? teacher.email : ''}}</p>
+                    <div class="d-flex justify-content-center mb-3 gap-1 flex-wrap flex-row">
+                        <input type="password" name="text" class="input" placeholder="Contraseña Vieja" v-model="oldPassword">
+                        <input type="password" name="text" class="input" placeholder="Contraseña Nueva"  v-model="newPassword">
+                        <button class="btn" style="background-color: darkturquoise;" @click="changePassword()">Cambiar contraseña</button>
+                    </div>
+                    <p class="fs-6"><span class="fw-bold">Mis cursos:</span></p>
+                    <ul class="navbar-nav gap-3">
+                        <template v-for=" course of getCoursesTitle()">
+                            <li class="nav-item fs-6">{{course}}</li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+        <footer class="d-flex justify-content-around align-items-center">
+            <img src="http://quintoimpacto.net/wp-content/uploads/freshizer/0818debafafcc373c30df1dea0534558_iso-0-50-c-90.png"
+                alt="normas-iso">
+            <div class="">
+                <p class="m-0">Copyright 2023 ©&nbsp;All Rights Reserved</p>
+                <p class="mt-3 mb-3"><a class="text-decoration-none text-dark fw-bold"
+                        href="mailto:hola@quintoimpacto.net">hola@quintoimpacto.net</a></p>
+                <p class="mb-0">Distrito 33 - Ruta provincial 99 s/n Ciudad de Mendoza</p>
+            </div>
+        </footer>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/web/assets/js/profile.js"></script>
+</body>
+
+</html>
