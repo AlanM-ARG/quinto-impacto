@@ -56,6 +56,30 @@ public class TeacherController {
         return teacherService.findTeacherDTOByEmail(authentication.getName());
     }
 
+    @PatchMapping("/teacher/current/changePassword")
+    public ResponseEntity<?> changePassword(Authentication authentication, @RequestParam String password, @RequestParam String oldPassword){
+
+        Teacher teacher = teacherService.findTeacherByEmail(authentication.getName());
+
+        if (teacher == null){
+            return new ResponseEntity<>("Debes iniciar sesion", HttpStatus.FORBIDDEN);
+        }
+        if (password.isEmpty()){
+            return new ResponseEntity<>("Ingrese la contraseña nueva",HttpStatus.FORBIDDEN);
+        }
+        if (password.equals(oldPassword)){
+            return new ResponseEntity<>("Las contraseñas son iguales",HttpStatus.FORBIDDEN);
+        }
+        if (!passwordEncoder.matches(oldPassword, teacher.getPassword())){
+            return new ResponseEntity<>("Contraseña erronea",HttpStatus.FORBIDDEN);
+        }
+
+        teacher.setPassword(passwordEncoder.encode(password));
+        teacherService.saveTeacher(teacher);
+
+        return new ResponseEntity<>("Contraseña cambiada",HttpStatus.OK);
+    }
+
     @PostMapping("/teacher")
     public ResponseEntity<?> registerTeacher( @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password){
 
@@ -64,19 +88,19 @@ public class TeacherController {
         Teacher teacher = teacherService.findTeacherByEmail(email);
 
         if (firstName.isEmpty() ){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese un nombre",HttpStatus.FORBIDDEN);
         }
         if (lastName.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese un apellido",HttpStatus.FORBIDDEN);
         }
         if (email.isEmpty() ){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese un correo electronico",HttpStatus.FORBIDDEN);
         }
         if (password.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ingrese una contraseña",HttpStatus.FORBIDDEN);
         }
         if (student != null && teacher != null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Ya exite un usuario con correo electronico",HttpStatus.FORBIDDEN);
         }
 
         Set<String> allTokens = teacherService.getAllTokens();
@@ -94,7 +118,7 @@ public class TeacherController {
 
         emailService.sendEmail(newTeacher.getEmail(), emailService.buildEmail(newTeacher.getFirstName(), link));
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Profesor Registrado",HttpStatus.CREATED);
 
     }
 
@@ -102,7 +126,7 @@ public class TeacherController {
     public ResponseEntity<?> confirmTeacher (@PathVariable String token, HttpServletResponse response) throws IOException {
 
         if (token.isEmpty()){
-            return new ResponseEntity<>("Token cannot be found", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("No puede enviar un token vacio", HttpStatus.FORBIDDEN);
         }
 
         Teacher teacher = teacherService.findByToken(token);
@@ -111,7 +135,7 @@ public class TeacherController {
 
 
             if (teacher.getActive()) {
-                return new ResponseEntity<>("The teacher is already activated", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("El profesor ya se encontraba activado", HttpStatus.FORBIDDEN);
             }
 
             teacher.setActive(true);
@@ -120,10 +144,10 @@ public class TeacherController {
 
             response.sendRedirect("/web/login-register.html?confirmed=true");
 
-            return new ResponseEntity<>("Teacher Confirmed", HttpStatus.OK);
+            return new ResponseEntity<>("Correo electronico de Profesor confirmado", HttpStatus.OK);
 
         }
-        return new ResponseEntity<>("No Teacher with this token was found.", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("No se encontro ningun profesor con ese token", HttpStatus.FORBIDDEN);
 
     }
 
@@ -135,20 +159,38 @@ public class TeacherController {
         Course course = courseService.findCourseById(courseID);
 
         if (!teacher.getCourses().contains(course)){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Este curso no esta asociado a este Profesor",HttpStatus.FORBIDDEN);
         }
         if (course == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El curso no existe",HttpStatus.FORBIDDEN);
         }
         if (course.getTeacher() == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Este Curso no tiene profesor",HttpStatus.FORBIDDEN);
         }
 
         course.setTeacher(null);
 
         courseService.saveCourse(course);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Profesor borrado del curso exitosamente",HttpStatus.OK);
+    }
+
+    @PostMapping("/teacher/current/uploadImage")
+    public ResponseEntity<?> saveImage(@RequestParam String image,Authentication authentication) {
+
+        Teacher teacher = teacherService.findTeacherByEmail(authentication.getName());
+
+        if (teacher == null){
+            return new ResponseEntity<>("Debes iniciar sesion para realizar esta operacion",HttpStatus.FORBIDDEN);
+        }
+        if (image.isEmpty()){
+            return new ResponseEntity<>("Seleccione una imagen",HttpStatus.FORBIDDEN);
+        }
+
+        teacher.setProfileImage(image);
+        teacherService.saveTeacher(teacher);
+
+        return new ResponseEntity<>("Imagen de perfil Cambiada", HttpStatus.OK);
     }
 
 }

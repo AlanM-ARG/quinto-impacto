@@ -24,4 +24,6 @@ public interface CourseService {
     Course findCourseByTitle(String title);
     void deleteStudentCourse(Course course, CourseStudent courseStudent);
 
+    Set<Course> getCoursesActives();
+
 }

@@ -38,7 +38,7 @@ const app = Vue.createApp({
             return "https://i.ibb.co/yFKrNwB/estudio.png"
         },
         getCourses() {
-            axios.get("http://localhost:8080/api/courses")
+            axios.get("http://localhost:8080/api/courses/active")
                 .then(response => {
                     this.courses = response.data.sort((a, b) => a.id - b.id)
                 })
