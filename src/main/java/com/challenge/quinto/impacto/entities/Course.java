@@ -22,6 +22,8 @@ public class Course {
 
     private String category;
 
+    private Boolean enabled;
+
     private Shifts shift;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -40,6 +42,7 @@ public class Course {
         this.coverPage = coverPage;
         this.shift = shift;
         this.category = category;
+        this.enabled = true;
     }
 
     public Course(String title, String description, String coverPage, Shifts shift, Teacher teacher, String category) {
@@ -49,6 +52,7 @@ public class Course {
         this.shift = shift;
         this.teacher = teacher;
         this.category = category;
+        this.enabled = true;
     }
 
     public Long getId() {
@@ -109,5 +113,13 @@ public class Course {
 
     public void setCourseStudents(Set<CourseStudent> courseStudents) {
         this.courseStudents = courseStudents;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }
