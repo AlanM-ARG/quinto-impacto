@@ -175,7 +175,7 @@ public class TeacherController {
         return new ResponseEntity<>("Profesor borrado del curso exitosamente",HttpStatus.OK);
     }
 
-    @PostMapping("/teacher/current/uploadImage")
+    @PatchMapping("/teacher/current/uploadImage")
     public ResponseEntity<?> saveImage(@RequestParam String image,Authentication authentication) {
 
         Teacher teacher = teacherService.findTeacherByEmail(authentication.getName());

@@ -150,7 +150,7 @@ public class StudentController {
         return new ResponseEntity<>("Contraseña cambiada",HttpStatus.OK);
     }
 
-    @PostMapping("/students/current/uploadImage")
+    @PatchMapping("/students/current/uploadImage")
     public ResponseEntity<?> saveImage(@RequestParam String image,Authentication authentication) {
 
         Student student = studentService.findStudentByEmail(authentication.getName());

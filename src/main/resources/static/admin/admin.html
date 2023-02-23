@@ -26,7 +26,7 @@
                 <h1 class="fw-bolder">Universidad Quinto Impacto</h1>
                 <ul class="navbar-nav flex-row gap-5">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="opacity: 50%; cursor: auto;">Inicio</a>
+                        <a class="nav-link" href="/web/index.html">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/web/courses.html">Cursos</a>
@@ -36,6 +36,9 @@
                     </li>
                     <li class="nav-item" v-if="student.length == 0">
                         <a class="nav-link" href="/web/login-register.html">Iniciar Sesion</a>
+                    </li>
+                    <li class="nav-item" v-if="student.email == 'admin@admin.com'">
+                        <a class="nav-link" href="#" style="opacity: 50%; cursor: auto;">Panel de Admin</a>
                     </li>
                 </ul>
                 <img class="profile dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
@@ -58,7 +61,7 @@
                             aria-label="Search" v-model="studentName" @change="searchAndFilter">
                         <div class="form-floating p-0">
                             <select class="form-select" id="floatingSelect" v-model="courseFilter">
-                                <option selected value="" >Ninguno Seleccionado</option>
+                                <option selected value="">Ninguno Seleccionado</option>
                                 <template v-for="(course, index) in courses" :key="index">
                                     <option :value="course.title">{{course.title}}</option>
                                 </template>
@@ -165,8 +168,65 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="w-100">
+                <div class="w-100 d-flex justify-content-center align-items-center flex-column">
                     <h3 class="text-white text-center" style="width: 100%;">Cursos</h3>
+                    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Crear Curso</button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="modal-title fs-5" id="exampleModalLabel">Complete los datos del nuevo
+                                        curso</h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div
+                                        class="d-flex justify-content-center align-items-center flex-column flex-wrap gap-3">
+                                        <input placeholder="Titulo" class="input1 text-dark" type="text" v-model="title">
+                                        <input placeholder="Descripcion" class="input1 text-dark" type="text" v-model="description">
+                                        <input placeholder="Categoria" class="input1 text-dark" type="text" v-model="category">
+                                        <div class="form-floating p-0">
+                                            <select class="form-select" id="floatingSelect2" v-model="shift">
+                                                <option selected value="">Ninguno Seleccionado</option>
+                                                <option value="MAÑANA">Mañana</option>
+                                                <option value="TARDE">Tarde</option>
+                                                <option value="NOCHE">Noche</option>
+                                            </select>
+                                            <label for="floatingSelect2">Selecciona un Turno</label>
+                                        </div>
+                                        <div class="container">
+                                            <label for="file" class="footer">
+                                                <svg fill="#000000" viewBox="0 0 32 32"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                        stroke-linejoin="round"></g>
+                                                    <g id="SVGRepo_iconCarrier">
+                                                        <path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path>
+                                                        <path d="M18.153 6h-.009v5.342H23.5v-.002z"></path>
+                                                    </g>
+                                                </svg>
+                                                <p v-if="!image" class="mb-0">No selecciono ninguna imagen</p>
+                                                <p v-else class="mb-0">Imagen Seleccionada</p>   
+                                            </label>
+                                            <form id="courseImage" enctype="multipart/form-data">
+                                                <input id="file" name="file" type="file" accept=".png, .jpg, .jpeg" @change="this.image = true">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" @click="createCourse()" class="btn btn-primary"
+                                        data-bs-dismiss="modal">Crear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table table-light container-fluid">
                         <thead>
                             <tr>
@@ -241,7 +301,7 @@
                                             </button>
                                         </div>
                                     </td>
-                                    
+
                                 </tr>
                             </template>
                         </tbody>

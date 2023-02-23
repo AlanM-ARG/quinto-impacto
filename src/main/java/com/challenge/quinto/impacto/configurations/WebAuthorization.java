@@ -1,5 +1,6 @@
 package com.challenge.quinto.impacto.configurations;
 
+import com.challenge.quinto.impacto.entities.Rol;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +24,8 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
+                .antMatchers("/api/students/current/**", "/api/teacher/current/**").hasAnyAuthority(String.valueOf(Rol.ADMIN), String.valueOf(Rol.STUDENT), String.valueOf(Rol.TEACHER))
+                .antMatchers("/admin/**").hasAnyAuthority(String.valueOf(Rol.ADMIN))
                 .antMatchers("/**").permitAll()
                 .antMatchers(HttpMethod.POST).permitAll()
 

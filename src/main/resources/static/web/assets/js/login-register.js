@@ -9,7 +9,7 @@ const app = Vue.createApp({
             registerEmail: "",
             registerPassword: "",
             error: ""
-
+            
         }
     },
     created() {

@@ -13,7 +13,12 @@ const app = Vue.createApp({
             removeCoursesDTOTeacherSelected: [],
             removeCourseID: "",
             studentName: "",
-            courseFilter: ""
+            courseFilter: "",
+            image: false,
+            title:"",
+            description:"",
+            category:"",
+            shift: "",
         }
     },
     created() {
@@ -111,16 +116,43 @@ const app = Vue.createApp({
                     })
                 })
         },
-        disableCourse(id){
+        disableCourse(id) {
             console.log(id);
             axios.patch('http://localhost:8080/api/course/disable/' + id)
-        .then(response =>{
-            Swal.fire({
-                icon: 'success',
-                title: `${response.data}`,
-            })
-            this.getCourses()
-        })
+                .then(response => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: `${response.data}`,
+                    })
+                    this.getCourses()
+                })
+        },
+        createCourse() {
+            let form = document.querySelector('#courseImage');
+            let formData = new FormData(form)
+            formData.append('upload_preset', 'r16u29xq')
+            axios.post('https://api.cloudinary.com/v1_1/dlfic0owc/image/upload', formData)
+                .then(response => {
+                    axios.post("/api/courses", `title=${this.title}&description=${this.description}&coverPage=${response.data.secure_url}&shifts=${this.shift}&category=${this.category}`)
+                    .then(response => {
+                        this.title=''
+                        this.description=''
+                        this.shift=''
+                        this.category=''
+                        Swal.fire({
+                            icon: 'success',
+                            title: `${response.data}`,
+                        })
+                        this.getCourses()
+                    }).catch(err =>Swal.fire({
+                        icon: 'error',
+                        title: err.response.data + ''
+                    }))
+                })
+                .catch(err => Swal.fire({
+                    icon: 'error',
+                    title: err.response.data + ''
+                }))
         }
     },
     computed: {
@@ -130,7 +162,7 @@ const app = Vue.createApp({
                 let studentFilter = []
                 nameFilter.forEach(student => {
                     student.coursesStudentsTitle.forEach(course => {
-                        if(course == this.courseFilter){
+                        if (course == this.courseFilter) {
                             studentFilter.push(student)
                         }
                     });
