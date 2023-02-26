@@ -2,7 +2,6 @@ package com.challenge.quinto.impacto.dtos;
 
 import com.challenge.quinto.impacto.entities.Student;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 

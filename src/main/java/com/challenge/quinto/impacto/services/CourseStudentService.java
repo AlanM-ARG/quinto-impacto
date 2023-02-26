@@ -1,8 +1,8 @@
 package com.challenge.quinto.impacto.services;
 
-import com.challenge.quinto.impacto.dtos.CourseDTO;
 import com.challenge.quinto.impacto.dtos.CourseStudentDTO;
 import com.challenge.quinto.impacto.entities.CourseStudent;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Set;
 
@@ -25,5 +25,6 @@ public interface CourseStudentService {
 
     void deleteCourseStudent(CourseStudent courseStudent);
 
+    ResponseEntity<?> createCourseStudentBody(String email, Long courseID);
 
 }

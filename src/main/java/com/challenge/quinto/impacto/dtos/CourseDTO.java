@@ -1,15 +1,7 @@
 package com.challenge.quinto.impacto.dtos;
 
 import com.challenge.quinto.impacto.entities.Course;
-import com.challenge.quinto.impacto.entities.CourseStudent;
 import com.challenge.quinto.impacto.entities.Shifts;
-import com.challenge.quinto.impacto.entities.Teacher;
-
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 

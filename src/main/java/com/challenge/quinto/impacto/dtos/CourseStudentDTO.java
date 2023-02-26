@@ -1,8 +1,6 @@
 package com.challenge.quinto.impacto.dtos;
 
-import com.challenge.quinto.impacto.entities.Course;
 import com.challenge.quinto.impacto.entities.CourseStudent;
-import com.challenge.quinto.impacto.entities.Student;
 
 
 public class CourseStudentDTO {

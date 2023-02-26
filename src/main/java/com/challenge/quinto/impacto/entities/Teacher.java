@@ -30,7 +30,7 @@ public class Teacher {
 
     private Boolean admin;
 
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     Set<Course> courses = new HashSet<>();
 
     public Teacher() {

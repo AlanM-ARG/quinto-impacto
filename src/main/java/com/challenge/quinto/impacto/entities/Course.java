@@ -26,11 +26,11 @@ public class Course {
 
     private Shifts shift;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     Set<CourseStudent> courseStudents = new HashSet<>();
 
     public Course() {
