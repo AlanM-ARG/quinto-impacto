@@ -1,7 +1,7 @@
 const app = Vue.createApp({
     data() {
         return {
-            studentUrl: "http://localhost:8080/api/students/current",
+            studentUrl: "/api/students/current",
             student: "",
             students: [],
             backupStudents: [],
@@ -44,21 +44,21 @@ const app = Vue.createApp({
             return "https://cdn-icons-png.flaticon.com/512/7141/7141726.png"
         },
         getStudents() {
-            axios.get("http://localhost:8080/api/students")
+            axios.get("/api/students")
                 .then(response => {
                     this.students = response.data.sort(this.order)
                     this.backupStudents = response.data.sort(this.order)
                 })
         },
         getTeachers() {
-            axios.get("http://localhost:8080/api/teacher")
+            axios.get("/api/teacher")
                 .then(response => {
                     console.log(response);
                     this.teachers = response.data.sort(this.order)
                 })
         },
         getCourses() {
-            axios.get("http://localhost:8080/api/courses")
+            axios.get("/api/courses")
                 .then(response => {
                     console.log(response);
                     this.courses = response.data.sort(this.order)
@@ -74,8 +74,8 @@ const app = Vue.createApp({
                 confirmButtonText: 'Si',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post("http://localhost:8080/api/logout")
-                        .then(() => window.location.href = "http://localhost:8080/web/index.html")
+                    axios.post("/api/logout")
+                        .then(() => window.location.href = "/web/index.html")
                 }
             })
         },
@@ -84,7 +84,7 @@ const app = Vue.createApp({
             this.changeCourseSelected = id
         },
         changeTeacher() {
-            axios.patch("http://localhost:8080/api/courses/teacher", "courseID=" + this.changeCourseSelected + "&teacherID=" + this.changeTeacherSelected)
+            axios.patch("/api/courses/teacher", "courseID=" + this.changeCourseSelected + "&teacherID=" + this.changeTeacherSelected)
                 .then(response => {
                     this.changeTeacherSelected = ''
                     this.changeCourseSelected = ''
@@ -102,7 +102,7 @@ const app = Vue.createApp({
             this.removeCoursesDTOTeacherSelected = this.teachers.find(teacher => teacher.id == id).coursesDTO
         },
         removeCourse() {
-            axios.patch("http://localhost:8080/api/teacher/courses/delete", "teacherID=" + this.removeCourseTeacherID + "&courseID=" + this.removeCourseID)
+            axios.patch("/api/teacher/courses/delete", "teacherID=" + this.removeCourseTeacherID + "&courseID=" + this.removeCourseID)
                 .then(response => {
                     console.log(response);
                     this.removeCourseTeacherID = ""
@@ -118,7 +118,7 @@ const app = Vue.createApp({
         },
         disableCourse(id) {
             console.log(id);
-            axios.patch('http://localhost:8080/api/course/disable/' + id)
+            axios.patch('/api/course/disable/' + id)
                 .then(response => {
                     Swal.fire({
                         icon: 'success',

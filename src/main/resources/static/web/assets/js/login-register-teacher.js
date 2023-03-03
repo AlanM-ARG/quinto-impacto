@@ -1,7 +1,7 @@
 const app = Vue.createApp({
     data() {
         return {
-            teacherUrl: "http://localhost:8080/api/teacher",
+            teacherUrl: "/api/teacher",
             loginEmail: "",
             loginPassword: "",
             registerFirstName: "",
@@ -16,7 +16,7 @@ const app = Vue.createApp({
     },
     methods: {
         login() {
-            axios.post("http://localhost:8080/api/login", "email=" + this.loginEmail + "&password=" + this.loginPassword)
+            axios.post("/api/login", "email=" + this.loginEmail + "&password=" + this.loginPassword)
                 .then(response => {
                     window.location.href = "/"
                     console.log(response);

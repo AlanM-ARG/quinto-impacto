@@ -1,8 +1,8 @@
 const app = Vue.createApp({
     data() {
         return {
-            studentUrl: "http://localhost:8080/api/students/current",
-            teacherUrl: "http://localhost:8080/api/teacher/current",
+            studentUrl: "/api/students/current",
+            teacherUrl: "/api/teacher/current",
             student: "",
             teacher: "",
 
@@ -43,8 +43,8 @@ const app = Vue.createApp({
                 confirmButtonText: 'Si',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post("http://localhost:8080/api/logout")
-                    .then(() => window.location.href = "http://localhost:8080/web/index.html")
+                    axios.post("/api/logout")
+                    .then(() => window.location.href = "/web/index.html")
                 } 
             })
         }

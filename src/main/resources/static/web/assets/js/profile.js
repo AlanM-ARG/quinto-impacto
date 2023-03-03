@@ -1,8 +1,8 @@
 const app = Vue.createApp({
     data() {
         return {
-            studentUrl: "http://localhost:8080/api/students/current",
-            teacherUrl: "http://localhost:8080/api/teacher/current",
+            studentUrl: "/api/students/current",
+            teacherUrl: "/api/teacher/current",
             student: "",
             teacher: "",
             newPassword: "",
@@ -50,7 +50,7 @@ const app = Vue.createApp({
             axios.post('https://api.cloudinary.com/v1_1/dlfic0owc/image/upload', formData)
                 .then(response => {
                     if (this.student != 0) {
-                        axios.post("http://localhost:8080/api/students/current/uploadImage", "image=" + response.data.secure_url)
+                        axios.post("/api/students/current/uploadImage", "image=" + response.data.secure_url)
                             .then(() => {
                                 this.getStudent()
                                 Swal.fire('Imagen Cambiada con exito!', '', 'success')
@@ -60,7 +60,7 @@ const app = Vue.createApp({
                                 title: err.response.data + ''
                             }))
                     } else if (this.teacher != 0) {
-                        axios.post("http://localhost:8080/api/teacher/current/uploadImage", "image=" + response.data.secure_url)
+                        axios.post("/api/teacher/current/uploadImage", "image=" + response.data.secure_url)
                             .then(() => {
                                 this.getTeacher()
                                 Swal.fire('Imagen Cambiada con exito!', '', 'success')
@@ -111,8 +111,8 @@ const app = Vue.createApp({
                 confirmButtonText: 'Si',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post("http://localhost:8080/api/logout")
-                        .then(() => window.location.href = "http://localhost:8080/web/index.html")
+                    axios.post("/api/logout")
+                        .then(() => window.location.href = "/web/index.html")
                 }
             })
                 .catch(err => Swal.fire({

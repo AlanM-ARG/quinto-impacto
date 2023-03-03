@@ -1,8 +1,8 @@
 const app = Vue.createApp({
     data() {
         return {
-            studentUrl: "http://localhost:8080/api/students/current",
-            teacherUrl: "http://localhost:8080/api/teacher/current",
+            studentUrl: "/api/students/current",
+            teacherUrl: "/api/teacher/current",
             student: "",
             teacher: "",
             courses: "",
@@ -38,7 +38,7 @@ const app = Vue.createApp({
             return "https://i.ibb.co/yFKrNwB/estudio.png"
         },
         getCourses() {
-            axios.get("http://localhost:8080/api/courses/active")
+            axios.get("/api/courses/active")
                 .then(response => {
                     this.courses = response.data.sort((a, b) => a.id - b.id)
                 })
@@ -69,7 +69,7 @@ const app = Vue.createApp({
                     confirmButtonText: 'Si, inscribirme.'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        axios.post("http://localhost:8080/api/courseStudent", "courseID=" + courseID)
+                        axios.post("/api/courseStudent", "courseID=" + courseID)
                             .then(response =>
                                 Swal.fire({
                                     icon: 'success',
@@ -95,8 +95,8 @@ const app = Vue.createApp({
                 confirmButtonText: 'Si',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post("http://localhost:8080/api/logout")
-                        .then(() => window.location.href = "http://localhost:8080/web/index.html")
+                    axios.post("/api/logout")
+                        .then(() => window.location.href = "/web/index.html")
                 }
             })
         }
