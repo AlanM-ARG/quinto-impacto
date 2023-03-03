@@ -145,7 +145,7 @@ public class TeacherServiceImplement implements TeacherService {
 
         teacherRepository.save(newTeacher);
 
-        String link = "http://localhost:8080/api/teacher/confirm/" + token;
+        String link = "https://quinto-impacto-production.up.railway.app/api/teacher/confirm/" + token;
 
         emailService.sendEmail(newTeacher.getEmail(), emailService.buildEmail(newTeacher.getFirstName(), link));
 

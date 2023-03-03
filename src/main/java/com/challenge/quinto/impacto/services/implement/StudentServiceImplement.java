@@ -114,7 +114,7 @@ public class StudentServiceImplement implements StudentService {
 
         studentRepository.save(newStudent);
 
-        String link = "http://localhost:8080/api/students/confirm/" + token;
+        String link = "https://quinto-impacto-production.up.railway.app/api/students/confirm/" + token;
 
         emailService.sendEmail(newStudent.getEmail(), emailService.buildEmail(newStudent.getFirstName(), link));
 
