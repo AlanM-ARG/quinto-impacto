@@ -1,5 +1,6 @@
 package com.challenge.quinto.impacto;
 
+import com.challenge.quinto.impacto.entities.*;
 import com.challenge.quinto.impacto.repositories.CourseRepository;
 import com.challenge.quinto.impacto.repositories.CourseStudentRepository;
 import com.challenge.quinto.impacto.repositories.StudentRepository;
@@ -19,15 +20,15 @@ public class QuintoImpactoApplication {
 	}
 
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
 
 	@Bean
 	public CommandLineRunner initData(CourseRepository courseRepository, TeacherRepository teacherRepository, StudentRepository studentRepository, CourseStudentRepository courseStudentRepository) {
 		return args -> {
 
-
-
+//
+//
 //			Teacher teacher = new Teacher("Alan", "Morua", "alanmorua8@gmail.com", passwordEncoder.encode("123"), "https://i.ibb.co/cFr5syK/educacion-en-el-hogar.png", "123");
 //			Teacher teacher1 = new Teacher("Alberto", "Saucedo", "alberto@gmail.com", passwordEncoder.encode("123"), "https://i.ibb.co/cFr5syK/educacion-en-el-hogar.png", "123");
 //			Teacher teacher2 = new Teacher("Juan", "Villalba", "juan1@gmail.com", passwordEncoder.encode("123"), "https://i.ibb.co/cFr5syK/educacion-en-el-hogar.png", "123");
