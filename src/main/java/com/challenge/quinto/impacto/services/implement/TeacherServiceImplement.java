@@ -130,7 +130,7 @@ public class TeacherServiceImplement implements TeacherService {
         if (password.isEmpty()){
             return new ResponseEntity<>("Ingrese una contraseña",HttpStatus.FORBIDDEN);
         }
-        if (student != null && teacher != null){
+        if (student != null || teacher != null){
             return new ResponseEntity<>("Ya exite un usuario con correo electronico",HttpStatus.FORBIDDEN);
         }
 

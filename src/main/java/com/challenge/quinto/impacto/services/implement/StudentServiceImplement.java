@@ -99,8 +99,8 @@ public class StudentServiceImplement implements StudentService {
         if (password.isEmpty()){
             return new ResponseEntity<>("Ingrese una contraseña",HttpStatus.FORBIDDEN);
         }
-        if (student != null && teacher != null){
-            return new ResponseEntity<>("Ya exite un usuario con ese correo electronico",HttpStatus.FORBIDDEN);
+        if (student != null || teacher != null){
+            return new ResponseEntity<>("Ya exite un usuario con ese correo electronico", HttpStatus.FORBIDDEN);
         }
 
         Set<String> allTokens = studentRepository.findAll().stream().map(Student::getToken).collect(Collectors.toSet());
