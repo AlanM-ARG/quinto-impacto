@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -33,6 +34,11 @@ public class StudentController {
         return studentService.findStudentDTOByEmail(authentication.getName());
     }
 
+    @GetMapping("/students/filters")
+    public Set<StudentDTO> getStudentsByFilter(@RequestParam(required = false) Long idCourse, @RequestParam(required = false) String name){
+        return studentService.findStudentByFilter(idCourse, name);
+    }
+
     @PostMapping("/students")
     public ResponseEntity<?> registerStudent(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password){
 
@@ -50,7 +56,7 @@ public class StudentController {
     @PatchMapping("/students/current/changePassword")
     public ResponseEntity<?> changePassword(Authentication authentication, @RequestParam String password, @RequestParam String oldPassword){
 
-        return  studentService.changePasswordBody(authentication.getName(), password, oldPassword);
+        return studentService.changePasswordBody(authentication.getName(), password, oldPassword);
     }
 
     @PatchMapping("/students/current/uploadImage")

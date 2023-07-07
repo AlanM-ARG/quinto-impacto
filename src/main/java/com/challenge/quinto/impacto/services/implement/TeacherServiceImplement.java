@@ -145,7 +145,7 @@ public class TeacherServiceImplement implements TeacherService {
 
         teacherRepository.save(newTeacher);
 
-        String link = "https://quinto-impacto-production.up.railway.app/api/teacher/confirm/" + token;
+        String link = "http://localhost:8081/api/teacher/confirm/" + token;
 
         emailService.sendEmail(newTeacher.getEmail(), emailService.buildEmail(newTeacher.getFirstName(), link));
 
@@ -173,7 +173,7 @@ public class TeacherServiceImplement implements TeacherService {
 
             teacherRepository.save(teacher);
 
-            response.sendRedirect("/web/login-register.html?confirmed=true");
+            response.sendRedirect("/login?confirmed=true");
 
             return new ResponseEntity<>("Correo electronico de Profesor confirmado", HttpStatus.OK);
 

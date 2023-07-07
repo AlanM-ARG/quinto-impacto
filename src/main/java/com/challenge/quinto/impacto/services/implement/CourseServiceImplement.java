@@ -69,7 +69,7 @@ public class CourseServiceImplement implements CourseService {
 
     @Override
     public Set<Course> getCoursesActives() {
-        return courseRepository.findAll().stream().filter(Course::getEnabled).collect(Collectors.toSet());
+        return new HashSet<>(courseRepository.findAllActives());
     }
 
     @Override
@@ -149,7 +149,7 @@ public class CourseServiceImplement implements CourseService {
 
         Course courseSelected = courseRepository.findById(id).orElse(null);
 
-        if (id == null || id <= 0) {
+        if (id <= 0) {
             return new ResponseEntity<>("Ingrese un id valido",HttpStatus.FORBIDDEN);
         }
         if (courseSelected == null) {

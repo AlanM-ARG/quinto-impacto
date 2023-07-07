@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface StudentService {
@@ -35,5 +37,7 @@ public interface StudentService {
     ResponseEntity<?> changePasswordBody(String email, String password, String oldPassword);
 
     ResponseEntity<?> saveImageBody(String email, String image);
+
+    Set<StudentDTO> findStudentByFilter(Long idCourse, String name);
 
 }

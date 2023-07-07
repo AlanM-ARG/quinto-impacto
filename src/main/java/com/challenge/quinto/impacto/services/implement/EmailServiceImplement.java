@@ -32,7 +32,7 @@ public class EmailServiceImplement implements EmailService {
             helper.setText(body, true);
             helper.setTo(to);
             helper.setSubject("Quinto Impacto - Confirmacion de correo electronico");
-            helper.setFrom("alan.fernandom.12@gmail.com");
+            helper.setFrom("alanmoruaminecraft@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);
@@ -84,7 +84,7 @@ public class EmailServiceImplement implements EmailService {
                 "    </tr>\n" +
                 "  </tbody></table>\n" +
                 "                        <div align=\"center\">\n" +
-                "                            <img style=\" width: 50%; height: 20vh; object-fit: cover; object-position: bottom;\" src=\"http://quintoimpacto.net/wp-content/uploads/2016/08/fondou.jpg\">\n" +
+                "                            <img style=\"object-fit: cover; object-position: bottom;\" src=\"https://i.ibb.co/QCnctqM/logo-2020-01-01.png\">\n" +
                 "                        </div>\n" +
                 "\n" +
                 "\n" +

@@ -15,8 +15,6 @@ public class TeacherDTO {
 
     private String email;
 
-    private String password;
-
     private String profileImage;
 
     private Boolean active;
@@ -32,7 +30,6 @@ public class TeacherDTO {
         this.firstName = teacher.getFirstName();
         this.lastName = teacher.getLastName();
         this.email = teacher.getEmail();
-        this.password = teacher.getPassword();
         this.profileImage = teacher.getProfileImage();
         this.active = teacher.getActive();
         this.token = teacher.getToken();
@@ -54,10 +51,6 @@ public class TeacherDTO {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getProfileImage() {

@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -114,7 +112,7 @@ public class StudentServiceImplement implements StudentService {
 
         studentRepository.save(newStudent);
 
-        String link = "https://quinto-impacto-production.up.railway.app/api/students/confirm/" + token;
+        String link = "http://localhost:8081/api/students/confirm/" + token;
 
         emailService.sendEmail(newStudent.getEmail(), emailService.buildEmail(newStudent.getFirstName(), link));
 
@@ -140,7 +138,7 @@ public class StudentServiceImplement implements StudentService {
 
             studentRepository.save(student);
 
-            response.sendRedirect("/web/login-register.html?confirmed=true");
+            response.sendRedirect("/login?confirmed=true");
 
             return new ResponseEntity<>("Correo electronico de estudiante confirmado", HttpStatus.OK);
 
@@ -189,5 +187,10 @@ public class StudentServiceImplement implements StudentService {
         studentRepository.save(student);
 
         return new ResponseEntity<>("Imagen de perfil Cambiada", HttpStatus.OK);
+    }
+
+    @Override
+    public Set<StudentDTO> findStudentByFilter(Long idCourse, String name) {
+        return studentRepository.findByNameAndCourse(name, idCourse).stream().map(StudentDTO::new).collect(Collectors.toSet());
     }
 }

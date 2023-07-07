@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template.html :: head">
+
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <nav class="d-flex align-items-center justify-content-around">
+                <a class="navbar-brand" th:href="@{/}"><img
+                        src="https://i.ibb.co/QCnctqM/logo-2020-01-01.png"
+                        alt="logo-quinto-impacto"></a>
+                <h1 class="fw-bolder">Universidad Quinto Impacto</h1>
+                <ul class="navbar-nav flex-row gap-5">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/courses}">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="opacity: 50%; cursor: auto;">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="opacity: 50%; cursor: auto;">Iniciar Sesion</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main class="login-register">
+            <div class="section">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center align-self-center py-5">
+                            <div class="section pt-5 pt-sm-2 text-center">
+                                <h6 class="mb-0 pb-3"><span>Inicio de Sesion</span><span>Registro</span></h6>
+                                <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+                                <label for="reg-log"></label>
+                                <div class="card-3d-wrap mx-auto">
+                                    <div class="card-3d-wrapper">
+                                        <div class="card-front">
+                                            <div class="center-wrap">
+                                                <div class="section text-center">
+                                                    <h4 class="mb-4 pb-3">Iniciar Sesion - Estudiante</h4>
+                                                    <div class="form-group">
+                                                        <input type="email" name="logEmail" v-model="loginEmail"
+                                                            class="form-style" placeholder="Correo Electronico"
+                                                            id="logemail" autocomplete="off">
+                                                        <i class="input-icon uil uil-at"></i>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <input type="password" name="logPass" v-model="loginPassword"
+                                                            class="form-style" placeholder="Contraseña" id="logpass"
+                                                            autocomplete="off">
+                                                        <i class="input-icon uil uil-lock-alt"></i>
+                                                    </div>
+                                                    <button @click="login()" class="btn mt-4">Acceder</button>
+                                                    <p class="mb-0 mt-4 text-center"><a
+                                                        th:href="@{/login-teacher}" class="link">¿Sos
+                                                            Profesor?</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-back">
+                                            <div class="center-wrap">
+                                                <div class="section text-center">
+                                                    <h4 class="mb-4 pb-3">Registrarse - Estudiante</h4>
+                                                    <div class="form-group">
+                                                        <input type="text" name="regFirstName" class="form-style"
+                                                            placeholder="Nombre" id="regFirstName" autocomplete="off"
+                                                            v-model="registerFirstName">
+                                                        <i class="input-icon uil uil-user"></i>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <input type="text" name="regLastName" class="form-style"
+                                                            placeholder="Apellido" id="regLastName" autocomplete="off"
+                                                            v-model="registerLastName">
+                                                        <i class="input-icon uil uil-letter-english-a"></i>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <input type="email" name="regEmail" class="form-style"
+                                                            placeholder="Correo Electronico" id="regEmail"
+                                                            autocomplete="off" v-model="registerEmail">
+                                                        <i class="input-icon uil uil-at"></i>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <input type="password" name="regPass" class="form-style"
+                                                            placeholder="Contraseña" id="regPass" autocomplete="off"
+                                                            v-model="registerPassword">
+                                                        <i class="input-icon uil uil-lock-alt"></i>
+                                                    </div>
+                                                    <button class="btn mt-4" @click="register()">Registrarme</button>
+                                                    <p class="mb-0 mt-4 text-center"><a
+                                                        th:href="@{/login-teacher}" class="link">¿Sos
+                                                            Profesor?</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        <footer th:replace="template.html :: footer">
+            
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:replace="template.html :: logged"></script>
+    <script th:src="@{/assets/js/login-register.js}"></script>
+</body>
+
+</html>
